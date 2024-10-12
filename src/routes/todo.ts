@@ -57,4 +57,15 @@ todo.put("/edit/:id", async (c) => {
   return c.json(todos[todoIndex]);
 });
 
+// Todoの完了
+todo.put("/complete/:id", (c) => {
+  const { id } = c.req.param();
+  const todoIndex = todos.findIndex((t) => t.id === id);
+  if (todoIndex < 0) {
+    return c.text("Todoが見つかりませんでした", 404);
+  }
+  todos[todoIndex]["isCompleted"] = true;
+  return c.json(todos[todoIndex]);
+});
+
 export { todo };
