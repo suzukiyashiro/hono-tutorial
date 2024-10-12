@@ -35,4 +35,14 @@ todo.get("/", (c) => {
   return c.json(todos);
 });
 
+// 特定のTodoの取得
+todo.get("/:id", (c) => {
+  const { id } = c.req.param();
+  const todo = todos.find((t) => t.id === id);
+  if (!todo) {
+    return c.text("Todoが見つかりませんでした", 404);
+  }
+  return c.json(todo);
+});
+
 export { todo };
