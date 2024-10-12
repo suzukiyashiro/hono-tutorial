@@ -26,7 +26,6 @@ todo.post("/", async (c) => {
   /* ちなみに...
     200: all ok
     201: all ok & something created(POST)
-    204: all ok & no return (DELETE) 
   */
 });
 
@@ -66,6 +65,17 @@ todo.put("/complete/:id", (c) => {
   }
   todos[todoIndex]["isCompleted"] = true;
   return c.json(todos[todoIndex]);
+});
+
+// Todoの削除
+todo.delete("/:id", (c) => {
+  const { id } = c.req.param();
+  const todoIndex = todos.findIndex((t) => t.id === id);
+  if (todoIndex < 0) {
+    return c.text("Todoが見つかりませんでした", 404);
+  }
+  todos.splice(todoIndex, 1);
+  return c.text("Todoを削除しました", 200);
 });
 
 export { todo };
