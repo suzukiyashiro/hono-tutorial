@@ -45,4 +45,16 @@ todo.get("/:id", (c) => {
   return c.json(todo);
 });
 
+// Todoの編集
+todo.put("/edit/:id", async (c) => {
+  const { id } = c.req.param();
+  const { title, desc } = await c.req.json();
+  const todoIndex = todos.findIndex((t) => t.id === id);
+  if (todoIndex < 0) {
+    return c.text("Todoが見つかりませんでした", 404);
+  }
+  todos[todoIndex] = { ...todos[todoIndex], title, desc };
+  return c.json(todos[todoIndex]);
+});
+
 export { todo };
