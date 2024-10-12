@@ -30,4 +30,9 @@ todo.post("/", async (c) => {
   */
 });
 
+// Todoの取得
+todo.get("/", (c) => {
+  return c.json(todos);
+});
+
 export { todo };
